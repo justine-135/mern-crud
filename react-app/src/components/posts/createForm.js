@@ -17,7 +17,7 @@ const CreateForm = ({ form, setForm, index }) => {
     });
 
     const res = await axios
-      .post("http://localhost:5000/api/posts", {
+      .post("/api/posts", {
         title: form.title,
         body: form.body,
         category: form.category.split(","),
