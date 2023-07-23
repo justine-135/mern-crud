@@ -1,8 +1,13 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const postsController = require("./controllers/posts/posts");
+const cookieParser = require("cookie-parser");
+
 require("dotenv").config({ path: "./config.env" });
+
+const postsController = require("./controllers/posts");
+const usersController = require("./controllers/users");
+const requireAuth = require("./middleware/requireAuth");
 
 const port = process.env.PORT || 5000;
 
@@ -14,9 +19,15 @@ app.use(
     extended: true,
   })
 );
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
-// Send post
+// Create post
 app.post("/api/posts", postsController.create);
 
 // Get all posts
@@ -30,6 +41,18 @@ app.put("/api/posts/:id", postsController.update);
 
 // Delete post
 app.delete("/api/posts/:id", postsController.destroy);
+
+// Create user
+app.post("/api/signup", usersController.create);
+
+// Login user
+app.post("/api/login", usersController.login);
+
+// Logout user
+app.get("/api/logout", usersController.logout);
+
+// Middleware
+app.get("/api/check-auth", requireAuth, usersController.checkAuth);
 
 mongoose
   .connect(process.env.ATLAS_URI)
