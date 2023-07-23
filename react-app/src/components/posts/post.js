@@ -2,13 +2,14 @@ import axios from "axios";
 
 const Post = ({ posts, post, setPosts, setUpdateForm }) => {
   const handleDelete = async (_id) => {
-    const res = await axios.delete(`http://localhost:5000/api/posts/${_id}`);
+    const res = await axios.delete(`/api/posts/${_id}`);
 
     const newPosts = [...posts].filter((post) => {
       return post._id !== _id;
     });
 
     setPosts(newPosts);
+    setUpdateForm(null);
   };
 
   const handleUpdate = (post) => {
