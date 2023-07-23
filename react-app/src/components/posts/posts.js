@@ -7,6 +7,7 @@ const Posts = ({ posts, setPosts, setUpdateForm }) => {
         posts.map((post) => {
           return (
             <Post
+              key={post._id}
               posts={posts}
               post={post}
               setPosts={setPosts}
