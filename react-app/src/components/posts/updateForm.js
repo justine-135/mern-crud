@@ -13,7 +13,7 @@ const UpdateForm = ({ updateForm, setUpdateForm, index }) => {
 
     console.log(updateForm);
     const res = await axios
-      .put(`http://localhost:5000/api/posts/${_id}`, {
+      .put(`/api/posts/${_id}`, {
         title: updateForm.title,
         body: updateForm.body,
         category: updateForm.category.split(","),
