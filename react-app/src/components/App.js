@@ -1,54 +1,50 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import "../styles/App.scss";
-import CreateForm from "./posts/createForm";
-import UpdateForm from "./posts/updateForm";
-import Posts from "./posts/posts";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useState } from "react";
+import PostsPage from "../pages/postsPage";
+import LoginPage from "../pages/loginPage";
+import RequireAuth from "./RequireAuth";
+import SignupPage from "../pages/signupPage";
+import LogoutPage from "../pages/logoutPage";
 
 const App = () => {
-  const [posts, setPosts] = useState(null);
-
-  const [form, setForm] = useState({
-    title: "",
-    body: "",
-    category: "",
-    tags: "",
-  });
-
-  const [updateForm, setUpdateForm] = useState(null);
-
-  useEffect(() => {
-    index();
-  }, []);
-
-  const index = async () => {
-    const res = await axios.get("http://localhost:5000/api/posts");
-
-    setPosts(res.data);
-  };
-
+  const [loggedIn, setLoggedIn] = useState(false);
   return (
-    <div className="App">
-      {!updateForm && (
-        <CreateForm form={form} setForm={setForm} index={index} />
-      )}
-
-      {updateForm && (
-        <UpdateForm
-          updateForm={updateForm}
-          setUpdateForm={setUpdateForm}
-          index={index}
-        />
-      )}
-
-      <div>
-        <h2>Posts</h2>
-        <Posts
-          posts={posts}
-          setPosts={setPosts}
-          setUpdateForm={setUpdateForm}
-        />
-      </div>
+    <div>
+      <Router>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/login">Login</Link>
+            </li>
+            <li>
+              <Link to="/signup">Signup</Link>
+            </li>
+            <li>
+              <Link to="/logout">Logout</Link>
+            </li>
+          </ul>
+        </nav>
+        <Routes>
+          <Route
+            index
+            element={
+              <RequireAuth loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
+                <PostsPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/login"
+            element={<LoginPage setLoggedIn={setLoggedIn} />}
+          />
+          <Route path="/signup" element={<SignupPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
+        </Routes>
+      </Router>
     </div>
   );
 };
