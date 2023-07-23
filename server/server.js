@@ -28,19 +28,19 @@ app.use(
 );
 
 // Create post
-app.post("/api/posts", postsController.create);
+app.post("/api/posts", requireAuth, postsController.create);
 
 // Get all posts
-app.get("/api/posts", postsController.index);
+app.get("/api/posts", requireAuth, postsController.index);
 
 // Get single post
-app.get("/api/posts/:id", postsController.indexId);
+app.get("/api/posts/:id", requireAuth, postsController.indexId);
 
 // Find and update post
-app.put("/api/posts/:id", postsController.update);
+app.put("/api/posts/:id", requireAuth, postsController.update);
 
 // Delete post
-app.delete("/api/posts/:id", postsController.destroy);
+app.delete("/api/posts/:id", requireAuth, postsController.destroy);
 
 // Create user
 app.post("/api/signup", usersController.create);
