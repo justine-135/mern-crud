@@ -1,8 +1,16 @@
 import SignupForm from "../components/credentials/signupForm";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
-const SignupPage = () => {
+const SignupPage = ({ loggedIn }) => {
+  // const navigate = useNavigate();
+  // useEffect(() => {
+  //   if (loggedIn) {
+  //     navigate("/");
+  //   }
+  // }, []);
   return (
-    <div>
+    <div className="log-form-container">
       <SignupForm />
     </div>
   );
