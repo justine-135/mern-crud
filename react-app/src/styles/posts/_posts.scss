@@ -1,0 +1,218 @@
+@use "../mixins" as m;
+
+.home {
+  @include m.parentFlex();
+  flex-direction: column;
+  align-items: center;
+
+  .overlay {
+    &.open {
+      position: fixed;
+      top: 0;
+      height: 100vh;
+      width: 100%;
+      background-color: rgba(128, 128, 128, 0.432);
+    }
+  }
+  .modal {
+    display: none;
+    position: fixed;
+    box-shadow: 0px 5px 10px rgba(160, 160, 160, 0.5);
+    border-radius: 10px;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+
+      input {
+        padding: 1rem;
+        font-size: 0.938rem;
+        border-radius: 10px;
+        border: none;
+        background-color: rgba(230, 230, 230, 0.185);
+
+        &:focus {
+          outline: none;
+          border: 1px solid rgba(173, 216, 230, 0.185);
+          background-color: rgba(255, 255, 255, 0.185);
+        }
+      }
+
+      textarea {
+        display: block;
+        resize: none;
+        height: 150px;
+
+        padding: 1rem;
+        font-size: 0.938rem;
+        border-radius: 10px;
+        border: none;
+        background-color: rgba(230, 230, 230, 0.185);
+
+        &:focus {
+          outline: none;
+          border: 1px solid rgba(230, 230, 230, 0.185);
+          background-color: rgba(255, 255, 255, 0.185);
+        }
+      }
+
+      input[type="submit"] {
+        border: none;
+        width: 100%;
+        padding: 0.5rem;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        text-align: center;
+        text-decoration: none;
+        font-size: 0.938rem;
+
+        background-color: rgb(61, 39, 255);
+        color: white;
+        &:hover {
+          background-color: rgba(61, 39, 255, 0.863);
+        }
+      }
+    }
+
+    &.open {
+      display: block;
+      top: 50%;
+      left: 50%;
+      background-color: white;
+      min-height: 300px;
+      width: 90%;
+      transform: translate(-50%, -50%);
+
+      div {
+        @include m.parentFlex();
+        justify-content: space-between;
+        border-bottom: 1px solid rgba(128, 128, 128, 0.219);
+        padding: 1rem;
+
+        button {
+          background-color: white;
+          border: none;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .create-post-container {
+    @include m.parentFlex();
+    width: 100%;
+    margin: 40px 0 40px 0;
+    div {
+      @include m.parentFlex();
+
+      width: 80%;
+
+      .create-post-btn {
+        border: none;
+        padding: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: 600;
+        text-align: center;
+        margin-left: auto;
+        font-size: 1rem;
+
+        background-color: rgb(61, 39, 255);
+        color: white;
+        &:hover {
+          background-color: rgba(61, 39, 255, 0.863);
+        }
+      }
+    }
+  }
+
+  .home-post {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    margin: 0px 0 80px 0;
+    .posts {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      width: 80%;
+      gap: 2rem;
+      .post {
+        border: 1px solid rgba(128, 128, 128, 0.171);
+        padding: 1rem;
+        width: 100%;
+        border-radius: 10px;
+
+        ul {
+          list-style: none;
+
+          &.tags-ul {
+            @include m.tagsUl();
+          }
+        }
+
+        div {
+          width: 100%;
+          p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: 10px 0px 0 0;
+          }
+
+          h3 {
+            margin: 10px 0;
+          }
+
+          ul {
+            @include m.parentFlex();
+            justify-content: start;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            li {
+              font-size: 0.75rem;
+              font-weight: 400;
+              background-color: rgb(87, 69, 255);
+              padding: 0.2rem 0.7rem;
+              border-radius: 10px;
+              color: white;
+            }
+          }
+
+          &.btn-group {
+            @include m.parentFlex();
+            margin-top: 20px;
+            gap: 1rem;
+            button,
+            a {
+              border: none;
+              width: 100%;
+              padding: 0.5rem;
+              border-radius: 10px;
+              cursor: pointer;
+              font-weight: 600;
+              text-align: center;
+              text-decoration: none;
+              font-size: 0.938rem;
+            }
+            a {
+              background-color: rgb(61, 39, 255);
+              color: white;
+              &:hover {
+                background-color: rgba(61, 39, 255, 0.863);
+              }
+            }
+          }
+        }
+
+        .title {
+          display: flex;
+          justify-content: space-between;
+        }
+      }
+    }
+  }
+}

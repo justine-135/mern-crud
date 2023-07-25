@@ -1,0 +1,50 @@
+@use "../mixins" as m;
+
+.post-container {
+  @include m.parentFlex();
+  width: 100%;
+  margin: 40px 0 40px 0;
+
+  .post {
+    width: 80%;
+
+    a {
+      background-color: rgba(167, 167, 167, 0.445);
+      color: black;
+      padding: 0.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(167, 167, 167, 0.212);
+      }
+    }
+
+    h1 {
+      color: rgb(32, 7, 255);
+      margin-top: 20px;
+      padding: 1rem 0;
+    }
+
+    ul {
+      padding: 1rem 0;
+
+      list-style: none;
+
+      &.tags-ul {
+        @include m.tagsUl();
+      }
+    }
+
+    pre {
+      width: 100%;
+      padding: 1rem 0;
+      white-space: pre-wrap; /* Since CSS 2.1 */
+      white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+      white-space: -pre-wrap; /* Opera 4-6 */
+      white-space: -o-pre-wrap; /* Opera 7 */
+      word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+  }
+}
