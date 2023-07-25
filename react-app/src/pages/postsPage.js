@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import CreateForm from "../components/posts/createForm";
-import UpdateForm from "../components/posts/updateForm";
-import Posts from "../components/posts/posts";
+import CreateForm from "../components/posts/allPosts/createForm";
+import Posts from "../components/posts/allPosts/posts";
 
 const PostsPage = () => {
   const [posts, setPosts] = useState(null);
@@ -14,39 +13,54 @@ const PostsPage = () => {
     tags: "",
   });
 
-  const [updateForm, setUpdateForm] = useState(null);
+  const [open, setOpen] = useState(null);
 
   useEffect(() => {
     index();
   }, []);
 
   const index = async () => {
-    const res = await axios.get("/api/posts");
+    try {
+      const res = await axios.get("/api/posts");
+      setPosts(res.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-    setPosts(res.data);
+  const handleOpenPostModal = () => {
+    setOpen(true);
+  };
+
+  const handleClosePostModal = () => {
+    setOpen(false);
   };
 
   return (
-    <div className="App">
-      {!updateForm && (
-        <CreateForm form={form} setForm={setForm} index={index} />
-      )}
-
-      {updateForm && (
-        <UpdateForm
-          updateForm={updateForm}
-          setUpdateForm={setUpdateForm}
+    <div className="home">
+      <div className={`overlay ${open && "open"}`}></div>
+      <div className="create-post-container">
+        <div>
+          <button className="create-post-btn" onClick={handleOpenPostModal}>
+            Create post
+          </button>
+        </div>
+      </div>
+      <div className={`modal ${open && "open"}`}>
+        <div>
+          <p>Create a post</p>
+          <button onClick={handleClosePostModal}>Close</button>
+        </div>
+        <CreateForm
+          form={form}
+          setForm={setForm}
           index={index}
+          setOpen={setOpen}
         />
-      )}
+      </div>
 
-      <div>
-        <h2>Posts</h2>
-        <Posts
-          posts={posts}
-          setPosts={setPosts}
-          setUpdateForm={setUpdateForm}
-        />
+      <div className="home-post">
+        <Posts posts={posts} setPosts={setPosts} />
       </div>
     </div>
   );
