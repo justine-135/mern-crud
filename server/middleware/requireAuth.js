@@ -5,15 +5,17 @@ const requireAuth = async (req, res, next) => {
   try {
     // Read token off cookies
     const token = req.cookies.Authorization;
+    const email = req.cookies.email;
 
     // Decode the token
-    const decoded = jwt.verify(token, process.env.SECRET);
+    const decodedToken = jwt.verify(token, process.env.SECRET);
+    // const decodedEmail = jwt.verify(email, process.env.SECRET);
 
     // Check expiration
-    if (Date.now() > decoded.exp) return res.sendStatus(401);
+    if (Date.now() > decodedToken.exp) return res.sendStatus(401);
 
-    // Find user using decoded sub
-    const user = await User.findById(decoded.sub);
+    // Find user using decodedToken sub
+    const user = await User.findById(decodedToken.sub);
     if (!user) return res.sendStatus(401);
 
     // attach user to req
