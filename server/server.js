@@ -7,6 +7,7 @@ require("dotenv").config({ path: "./config.env" });
 
 const postsController = require("./controllers/posts");
 const usersController = require("./controllers/users");
+const commentsController = require("./controllers/comments");
 const requireAuth = require("./middleware/requireAuth");
 
 const port = process.env.PORT || 5000;
@@ -30,6 +31,9 @@ app.use(
 // Create post
 app.post("/api/posts", requireAuth, postsController.create);
 
+// Get user posts
+app.get("/api/myposts", requireAuth, postsController.indexUser);
+
 // Get all posts
 app.get("/api/posts", requireAuth, postsController.index);
 
@@ -41,6 +45,12 @@ app.put("/api/posts/:id", requireAuth, postsController.update);
 
 // Delete post
 app.delete("/api/posts/:id", requireAuth, postsController.destroy);
+
+// Create comment
+app.post("/api/comment", requireAuth, commentsController.create);
+
+// Get comments my post
+app.get("/api/comment/:id", requireAuth, commentsController.indexPost);
 
 // Create user
 app.post("/api/signup", usersController.create);
