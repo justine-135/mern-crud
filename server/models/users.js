@@ -1,10 +1,7 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 const UsersSchema = mongoose.Schema(
   {
-    id: { type: ObjectId },
     email: {
       type: String,
       required: true,
@@ -16,6 +13,7 @@ const UsersSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    posts: [{ type: mongoose.Schema.Types.ObjectId, ref: "Posts" }],
   },
   { timestamps: true }
 );
