@@ -45,6 +45,7 @@ const login = async (req, res) => {
       sameSite: "lax",
       secure: process.env.NODE_ENV === "production",
     });
+    res.cookie("email", email);
 
     // send it
     res.status(200).json(user);
