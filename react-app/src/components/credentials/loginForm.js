@@ -5,6 +5,7 @@ import axios from "axios";
 const LoginForm = ({ setLoggedIn }) => {
   const navigate = useNavigate();
 
+  const [alert, setAlert] = useState(null);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -18,19 +19,18 @@ const LoginForm = ({ setLoggedIn }) => {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
-    await axios
-      .post("/api/login", form)
-      .then(function (response) {
+    try {
+      await axios.post("/api/login", form).then(function (response) {
         console.log(response);
         setLoggedIn(true);
+        setAlert(null);
         navigate("/");
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      })
-      .finally(function () {
-        setForm({ email: "", password: "" });
       });
+    } catch (error) {
+      setAlert(true);
+    }
+
+    setForm({ email: "", password: "" });
   };
 
   return (
@@ -42,7 +42,7 @@ const LoginForm = ({ setLoggedIn }) => {
       >
         <h2>Login here</h2>
         <input
-          type="email"
+          type="text"
           onChange={(e) => handleFormInput(e)}
           value={form.email}
           name="email"
@@ -57,6 +57,7 @@ const LoginForm = ({ setLoggedIn }) => {
         />
         <input type="submit" value="Login" />
       </form>
+      {alert && <p>User not found.</p>}
     </div>
   );
 };
