@@ -1,10 +1,10 @@
 import "../styles/App.scss";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Cookies from "js-cookie";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import PostsPage from "../pages/postsPage";
 import LoginPage from "../pages/loginPage";
-import RequireAuth from "./RequireAuth";
 import SignupPage from "../pages/signupPage";
 import LogoutPage from "../pages/logoutPage";
 import UserPostsPage from "../pages/userPostsPage";
@@ -25,7 +25,7 @@ const App = () => {
     };
 
     checkAuth();
-  }, []);
+  }, [Cookies]);
 
   const handlePage = () => {};
   return (
@@ -38,7 +38,7 @@ const App = () => {
                 Home
               </Link>
             </li>
-            {!loggedIn && (
+            {Cookies.get("email") === undefined ? (
               <div>
                 <li>
                   <Link to="/login">Login</Link>
@@ -47,8 +47,7 @@ const App = () => {
                   <Link to="/signup">Signup</Link>
                 </li>
               </div>
-            )}
-            {loggedIn && (
+            ) : (
               <div>
                 <li>
                   <Link to="/myposts">My posts</Link>
@@ -61,14 +60,7 @@ const App = () => {
           </ul>
         </nav>
         <Routes>
-          <Route
-            index
-            element={
-              // <RequireAuth loggedIn={loggedIn} setLoggedIn={setLoggedIn}>
-              <PostsPage />
-              // </RequireAuth>
-            }
-          />
+          <Route index element={<PostsPage />} />
           <Route path="/:id" element={<PostPage />} />
 
           <Route path="/myposts" element={<UserPostsPage />} />
