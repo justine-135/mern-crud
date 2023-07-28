@@ -4,7 +4,6 @@ const PostsSchema = mongoose.Schema(
   {
     title: { type: String, required: [true, "Please enter title"] },
     body: { type: String, required: [true, "Please enter body"] },
-    category: [{ type: String, required: [true, "Please enter category"] }],
     likes: { type: Number, default: 0 },
     tags: [{ type: String, required: [true, "Please enter tag"] }],
     user: [{ type: mongoose.Schema.Types.ObjectId, ref: "Users" }],
