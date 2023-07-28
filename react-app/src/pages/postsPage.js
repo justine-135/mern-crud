@@ -2,9 +2,15 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import CreateForm from "../components/posts/allPosts/createForm";
 import Posts from "../components/posts/allPosts/posts";
+import Tags from "../components/posts/tags/tags";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const PostsPage = () => {
+  const navigate = useNavigate();
+
   const [posts, setPosts] = useState(null);
+  const [filterTags, setFilterTags] = useState([]);
 
   const [form, setForm] = useState({
     title: "",
@@ -16,6 +22,9 @@ const PostsPage = () => {
   const [open, setOpen] = useState(null);
 
   useEffect(() => {
+    if (Cookies.get("email") === undefined) {
+      navigate("/login");
+    }
     index();
   }, []);
 
@@ -40,7 +49,8 @@ const PostsPage = () => {
     <div className="home">
       <div className={`overlay ${open && "open"}`}></div>
       <div className="create-post-container">
-        <div>
+        <div className="create-post-tags-container">
+          <Tags filterTags={filterTags} setFilterTags={setFilterTags} />
           <button className="create-post-btn" onClick={handleOpenPostModal}>
             Create post
           </button>
@@ -60,7 +70,13 @@ const PostsPage = () => {
       </div>
 
       <div className="home-post">
-        <Posts posts={posts} setPosts={setPosts} />
+        <Posts
+          posts={posts}
+          setPosts={setPosts}
+          index={index}
+          filterTags={filterTags}
+          setFilterTags={setFilterTags}
+        />
       </div>
     </div>
   );
