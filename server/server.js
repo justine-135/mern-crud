@@ -46,8 +46,14 @@ app.put("/api/posts/:id", requireAuth, postsController.update);
 // Delete post
 app.delete("/api/posts/:id", requireAuth, postsController.destroy);
 
+// Likes post
+app.put("/api/like/:id", requireAuth, postsController.like);
+
 // Create comment
 app.post("/api/comment", requireAuth, commentsController.create);
+
+// Delete comment
+app.delete("/api/comment/:id", requireAuth, commentsController.destroy);
 
 // Get comments my post
 app.get("/api/comment/:id", requireAuth, commentsController.indexPost);
