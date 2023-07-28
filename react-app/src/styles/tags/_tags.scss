@@ -1,0 +1,40 @@
+@use "../mixins" as m;
+
+.filtertags-container {
+  width: 80%;
+  @media screen and (max-width: 600px) {
+    width: 100%;
+  }
+  .filtertags-flex {
+    display: flex;
+    align-items: center;
+    .filtertags {
+      display: flex;
+      flex-wrap: wrap;
+
+      gap: 1rem;
+      button {
+        border: none;
+        cursor: pointer;
+        background-color: rgba(128, 128, 128, 0.103);
+        padding: 0.2rem 0.5rem;
+        border-radius: 10px;
+        &:hover {
+          background-color: rgba(61, 39, 255, 0.863);
+          color: white;
+        }
+      }
+    }
+    .clear-btn {
+      margin-left: 12px;
+      border: none;
+      background-color: transparent;
+      padding: 1rem;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
