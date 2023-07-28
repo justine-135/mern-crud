@@ -1,31 +1,21 @@
 import axios from "axios";
-import Comment from "../comments/comments";
+import { Link } from "react-router-dom";
 
-const Post = ({ posts, post, setPosts, setUpdateForm, setOpenUpdatePost }) => {
-  const handleDelete = async (_id) => {
+const Post = ({ post, index, filterTags, setFilterTags }) => {
+  const handleLike = async (_id) => {
     try {
-      await axios.delete(`/api/posts/${_id}`);
-
-      const newPosts = [...posts].filter((post) => {
-        return post._id !== _id;
-      });
-
-      setPosts(newPosts);
-      setUpdateForm(null);
+      await axios.put(`/api/like/${_id}`);
+      index();
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleUpdateModal = () => {
-    setUpdateForm({
-      _id: post._id,
-      title: post.title,
-      body: post.body,
-      category: post.category.toString(),
-      tags: post.tags.toString(),
-    });
-    setOpenUpdatePost(true);
+  const handleFilterTags = (tag) => {
+    const exist = filterTags.indexOf(tag) > -1;
+    if (!exist) {
+      setFilterTags([...filterTags, tag]);
+    }
   };
 
   return (
@@ -35,7 +25,12 @@ const Post = ({ posts, post, setPosts, setUpdateForm, setOpenUpdatePost }) => {
           return (
             <li key={index}>
               <span>#</span>
-              {tag}
+              <input
+                type="button"
+                name={tag}
+                value={tag}
+                onClick={() => handleFilterTags(tag)}
+              />
             </li>
           );
         })}
@@ -43,21 +38,12 @@ const Post = ({ posts, post, setPosts, setUpdateForm, setOpenUpdatePost }) => {
       <div>
         <p>{post.body} </p>
         <h3>{post.title}</h3>
-        <ul className="categories-ul">
-          {post.category.map((category) => {
-            return <li key={category}>{category}</li>;
-          })}
-        </ul>
         <div className="btn-group">
-          <button>Like</button>
-          <button>View</button>
-          <button onClick={handleUpdateModal}>Update</button>
+          <button onClick={() => handleLike(post._id)}>
+            Like <span>{post.likes}</span>
+          </button>
+          <Link to={`/${post._id}`}>View</Link>
         </div>
-        {/* <Comment _id={post._id} /> */}
-        {/* <button onClick={() => handleDelete(post._id)} type="submit">
-          Delete
-        </button>
-        <button onClick={() => handleUpdate(post)}>Update</button> */}
       </div>
     </div>
   );

@@ -1,6 +1,11 @@
 import axios from "axios";
 
-const UpdateForm = ({ updateForm, setUpdateForm, index }) => {
+const UpdateForm = ({
+  updateForm,
+  setUpdateForm,
+  index,
+  setOpenUpdatePost,
+}) => {
   const handleChangeUpdate = (e) => {
     const newForm = { ...updateForm };
     newForm[e.target.id] = e.target.value;
@@ -9,30 +14,19 @@ const UpdateForm = ({ updateForm, setUpdateForm, index }) => {
 
   const handleFormUpdate = async (e) => {
     e.preventDefault();
-    const _id = updateForm._id;
-
-    console.log(updateForm);
-    const res = await axios
-      .put(`/api/posts/${_id}`, {
+    try {
+      const _id = updateForm._id;
+      await axios.put(`/api/posts/${_id}`, {
         title: updateForm.title,
         body: updateForm.body,
-        category: updateForm.category.split(","),
         likes: updateForm.likes,
         tags: updateForm.tags.split(","),
-      })
-      .then(function (response) {
-        index();
-      })
-      .catch(function (error) {
-        console.log(error.response.data);
-      })
-      .finally(function () {
-        setUpdateForm(null);
       });
-  };
-
-  const handleCancelUpdate = () => {
-    setUpdateForm(null);
+      setOpenUpdatePost(null);
+      index();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -50,20 +44,11 @@ const UpdateForm = ({ updateForm, setUpdateForm, index }) => {
         id="title"
         onChange={(e) => handleChangeUpdate(e)}
       />
-      <input
-        type="text"
+      <textarea
         name="body"
-        value={updateForm.body}
-        placeholder="Enter body"
         id="body"
-        onChange={(e) => handleChangeUpdate(e)}
-      />
-      <input
-        type="text"
-        name="category"
-        value={updateForm.category}
-        placeholder="Enter category"
-        id="category"
+        value={updateForm.body}
+        default={updateForm.body}
         onChange={(e) => handleChangeUpdate(e)}
       />
       <input
@@ -75,7 +60,6 @@ const UpdateForm = ({ updateForm, setUpdateForm, index }) => {
         onChange={(e) => handleChangeUpdate(e)}
       />
       <input type="submit" value="Update" />
-      <input type="button" value="Cancel" onClick={handleCancelUpdate} />
     </form>
   );
 };

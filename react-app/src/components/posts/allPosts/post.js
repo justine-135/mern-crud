@@ -1,19 +1,20 @@
 import axios from "axios";
-import Comment from "../comments/comments";
-import { BrowserRouter as Router, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-const Post = ({ posts, post, setPosts }) => {
-  const handleDelete = async (_id) => {
+const Post = ({ post, index, filterTags, setFilterTags }) => {
+  const handleLike = async (_id) => {
     try {
-      await axios.delete(`/api/posts/${_id}`);
-
-      const newPosts = [...posts].filter((post) => {
-        return post._id !== _id;
-      });
-
-      setPosts(newPosts);
+      await axios.put(`/api/like/${_id}`);
+      index();
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  const handleFilterTags = (tag) => {
+    const exist = filterTags.indexOf(tag) > -1;
+    if (!exist) {
+      setFilterTags([...filterTags, tag]);
     }
   };
 
@@ -24,7 +25,12 @@ const Post = ({ posts, post, setPosts }) => {
           return (
             <li key={index}>
               <span>#</span>
-              {tag}
+              <input
+                type="button"
+                name={tag}
+                value={tag}
+                onClick={() => handleFilterTags(tag)}
+              />
             </li>
           );
         })}
@@ -32,24 +38,12 @@ const Post = ({ posts, post, setPosts }) => {
       <div>
         <p>{post.body} </p>
         <h3>{post.title}</h3>
-        <ul className="categories-ul">
-          {post.category.map((category) => {
-            return <li key={category}>{category}</li>;
-          })}
-        </ul>
-
         <div className="btn-group">
-          <button>Like</button>
-          {/* <button>View</button> */}
+          <button onClick={() => handleLike(post._id)}>
+            Like <span>{post.likes}</span>
+          </button>
           <Link to={`/${post._id}`}>View</Link>
         </div>
-        {/* <p>Likes: {post.likes}</p>
-        <div className="comments"></div>
-        <Comment _id={post._id} /> */}
-        {/* <button onClick={() => handleDelete(post._id)} type="submit">
-          Delete
-        </button>
-        <button onClick={() => handleUpdate(post)}>Update</button> */}
       </div>
     </div>
   );

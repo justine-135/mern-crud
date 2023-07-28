@@ -12,7 +12,6 @@ const CreateForm = ({ form, setForm, index, setOpenCreatePost }) => {
 
     setForm({
       ...form,
-      category: form.category.split(","),
       tags: form.tags.split(","),
     });
 
@@ -21,7 +20,6 @@ const CreateForm = ({ form, setForm, index, setOpenCreatePost }) => {
         .post("/api/posts", {
           title: form.title,
           body: form.body,
-          category: form.category.split(","),
           likes: form.likes,
           tags: form.tags.split(","),
         })
@@ -33,7 +31,7 @@ const CreateForm = ({ form, setForm, index, setOpenCreatePost }) => {
           console.log(error.response.data);
         })
         .finally(function () {
-          setForm({ title: "", body: "", category: "", tags: "" });
+          setForm({ title: "", body: "", tags: "" });
         });
     } catch (error) {
       console.log(error);
@@ -55,22 +53,14 @@ const CreateForm = ({ form, setForm, index, setOpenCreatePost }) => {
         id="title"
         onChange={(e) => handleChange(e)}
       />
-      <input
-        type="text"
+      <textarea
         name="body"
         value={form.body}
         placeholder="Enter body"
         id="body"
         onChange={(e) => handleChange(e)}
       />
-      <input
-        type="text"
-        name="category"
-        value={form.category}
-        placeholder="Enter category"
-        id="category"
-        onChange={(e) => handleChange(e)}
-      />
+
       <input
         type="text"
         name="tags"

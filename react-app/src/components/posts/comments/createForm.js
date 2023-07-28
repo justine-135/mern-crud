@@ -66,6 +66,7 @@ const CreateForm = ({ _id, comments, setComments }) => {
         suppressContentEditableWarning={true}
         default={commentForm.comment}
         rows={textareaheight}
+        value={commentForm.comment}
       />
       <input type="submit" value="Post" />
     </form>
