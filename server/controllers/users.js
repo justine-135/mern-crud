@@ -58,6 +58,7 @@ const login = async (req, res) => {
 const logout = (req, res) => {
   try {
     res.cookie("Authorization", "", { expires: new Date() });
+    res.cookie("email", "", { expires: new Date() });
     res.sendStatus(200);
   } catch (err) {
     console.log(err);
