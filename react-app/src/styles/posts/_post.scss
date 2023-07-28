@@ -7,7 +7,33 @@
 
   .post {
     width: 80%;
+    max-width: 1152px;
 
+    @media screen and (max-width: 800px) {
+      width: 90%;
+    }
+
+    .btn-container {
+      display: flex;
+      .btn-group {
+        display: flex;
+        gap: 1rem;
+        margin-left: auto;
+        button {
+          background-color: rgba(167, 167, 167, 0.445);
+          color: black;
+          padding: 0.5rem;
+          border-radius: 10px;
+          text-decoration: none;
+          cursor: pointer;
+          border: none;
+
+          &:hover {
+            background-color: rgba(167, 167, 167, 0.212);
+          }
+        }
+      }
+    }
     a {
       background-color: rgba(167, 167, 167, 0.445);
       color: black;
@@ -25,6 +51,7 @@
       color: rgb(32, 7, 255);
       margin-top: 20px;
       padding: 1rem 0;
+      @include m.mobileH1();
     }
 
     ul {
@@ -34,6 +61,11 @@
 
       &.tags-ul {
         @include m.tagsUl();
+        button {
+          background-color: transparent;
+          border: none;
+          cursor: pointer;
+        }
       }
     }
 
@@ -45,6 +77,8 @@
       white-space: -pre-wrap; /* Opera 4-6 */
       white-space: -o-pre-wrap; /* Opera 7 */
       word-wrap: break-word; /* Internet Explorer 5.5+ */
+
+      @include m.mobileText();
     }
   }
 }

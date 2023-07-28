@@ -6,19 +6,10 @@
   align-items: center;
 
   .overlay {
-    &.open {
-      position: fixed;
-      top: 0;
-      height: 100vh;
-      width: 100%;
-      background-color: rgba(128, 128, 128, 0.432);
-    }
+    @include m.overlay();
   }
   .modal {
-    display: none;
-    position: fixed;
-    box-shadow: 0px 5px 10px rgba(160, 160, 160, 0.5);
-    border-radius: 10px;
+    @include m.modal();
 
     form {
       display: flex;
@@ -105,10 +96,20 @@
     @include m.parentFlex();
     width: 100%;
     margin: 40px 0 40px 0;
-    div {
+    .create-post-tags-container {
       @include m.parentFlex();
 
+      @media screen and (max-width: 600px) {
+        flex-direction: column-reverse;
+        gap: 2rem;
+      }
+
       width: 80%;
+      max-width: 1152px;
+
+      @media screen and (max-width: 800px) {
+        width: 90%;
+      }
 
       .create-post-btn {
         border: none;
@@ -130,87 +131,120 @@
   }
 
   .home-post {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     width: 100%;
     margin: 0px 0 80px 0;
-    .posts {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      width: 80%;
-      gap: 2rem;
-      .post {
-        border: 1px solid rgba(128, 128, 128, 0.171);
-        padding: 1rem;
-        width: 100%;
-        border-radius: 10px;
+    .posts-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .posts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        align-items: start;
+        width: 80%;
+        gap: 2rem;
+        justify-content: start;
+        max-width: 1152px;
 
-        ul {
-          list-style: none;
-
-          &.tags-ul {
-            @include m.tagsUl();
-          }
+        @media screen and (max-width: 800px) {
+          width: 90%;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
         }
-
-        div {
+        @media screen and (max-width: 530px) {
+          grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .post {
+          border: 1px solid rgba(128, 128, 128, 0.171);
+          padding: 1rem;
           width: 100%;
-          p {
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            margin: 10px 0px 0 0;
-          }
-
-          h3 {
-            margin: 10px 0;
-          }
+          border-radius: 10px;
 
           ul {
-            @include m.parentFlex();
-            justify-content: start;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-            li {
-              font-size: 0.75rem;
-              font-weight: 400;
-              background-color: rgb(87, 69, 255);
-              padding: 0.2rem 0.7rem;
-              border-radius: 10px;
-              color: white;
-            }
-          }
+            list-style: none;
 
-          &.btn-group {
-            @include m.parentFlex();
-            margin-top: 20px;
-            gap: 1rem;
-            button,
-            a {
-              border: none;
-              width: 100%;
-              padding: 0.5rem;
-              border-radius: 10px;
-              cursor: pointer;
-              font-weight: 600;
-              text-align: center;
-              text-decoration: none;
-              font-size: 0.938rem;
-            }
-            a {
-              background-color: rgb(61, 39, 255);
-              color: white;
-              &:hover {
-                background-color: rgba(61, 39, 255, 0.863);
+            &.tags-ul {
+              @include m.tagsUl();
+              li {
+                input {
+                  background-color: transparent;
+                  border: none;
+                  cursor: pointer;
+                  &:hover {
+                    text-decoration: underline;
+                  }
+                }
               }
             }
           }
-        }
 
-        .title {
-          display: flex;
-          justify-content: space-between;
+          div {
+            width: 100%;
+            p {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              margin: 10px 0px 0 0;
+            }
+
+            h3 {
+              margin: 10px 0;
+            }
+
+            ul {
+              @include m.parentFlex();
+              justify-content: start;
+              gap: 0.5rem;
+              flex-wrap: wrap;
+              li {
+                font-size: 0.75rem;
+                font-weight: 400;
+                background-color: rgb(87, 69, 255);
+                padding: 0.2rem 0.7rem;
+                border-radius: 10px;
+                color: white;
+              }
+            }
+
+            &.btn-group {
+              @include m.parentFlex();
+              margin-top: 20px;
+              gap: 1rem;
+              button,
+              a {
+                border: none;
+                width: 100%;
+                padding: 0.5rem;
+                border-radius: 10px;
+                cursor: pointer;
+                font-weight: 600;
+                text-align: center;
+                text-decoration: none;
+                font-size: 0.938rem;
+
+                &:nth-child(1) {
+                  span {
+                    background-color: rgba(61, 39, 255, 0.568);
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 10px;
+                    font-size: 0.75rem;
+                    color: white;
+                  }
+                }
+              }
+              a {
+                background-color: rgb(61, 39, 255);
+                color: white;
+                &:hover {
+                  background-color: rgba(61, 39, 255, 0.863);
+                }
+              }
+            }
+          }
+
+          .title {
+            display: flex;
+            justify-content: space-between;
+          }
         }
       }
     }
