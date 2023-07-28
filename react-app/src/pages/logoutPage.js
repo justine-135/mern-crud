@@ -9,27 +9,21 @@ const LogoutPage = ({ loggedIn, setLoggedIn }) => {
     if (!loggedIn) {
       navigate("/login");
     }
-  }, []);
+  }, [loggedIn]);
 
   useEffect(() => {
-    const logout = async () => {
-      try {
-        await axios
-          .get("/api/logout")
-          .then(function (response) {
-            console.log(response);
-            navigate("/login");
-            setLoggedIn(false);
-          })
-          .catch(function (error) {
-            console.log(error.response.data);
-          });
-      } catch (error) {
-        console.log(error);
-      }
-    };
     logout();
-  }, [navigate]);
+  }, []);
+
+  const logout = async () => {
+    try {
+      await axios.get("/api/logout");
+      navigate("/login");
+      setLoggedIn(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return <div>LogoutPage</div>;
 };
