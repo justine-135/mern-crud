@@ -25,18 +25,15 @@ const App = () => {
     };
 
     checkAuth();
-  }, [Cookies]);
+  }, []);
 
-  const handlePage = () => {};
   return (
     <div className="App">
       <Router>
         <nav className="nav">
           <ul>
             <li>
-              <Link to="/" onClick={handlePage}>
-                Home
-              </Link>
+              <Link to="/">Home</Link>
             </li>
             {Cookies.get("email") === undefined ? (
               <div>
@@ -73,7 +70,9 @@ const App = () => {
           <Route path="/signup" element={<SignupPage loggedIn={loggedIn} />} />
           <Route
             path="/logout"
-            element={<LogoutPage loggedIn={loggedIn} setLoggedIn={loggedIn} />}
+            element={
+              <LogoutPage loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+            }
           />
         </Routes>
       </Router>
