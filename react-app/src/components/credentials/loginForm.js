@@ -34,7 +34,7 @@ const LoginForm = ({ setLoggedIn }) => {
   };
 
   return (
-    <div>
+    <div className="credentials-container">
       <form
         onSubmit={(e) => {
           handleFormSubmit(e);
@@ -47,6 +47,7 @@ const LoginForm = ({ setLoggedIn }) => {
           value={form.email}
           name="email"
           id="email"
+          placeholder="Enter your email"
         />
         <input
           type="password"
@@ -54,10 +55,11 @@ const LoginForm = ({ setLoggedIn }) => {
           value={form.password}
           name="password"
           id="password"
+          placeholder="Enter your password"
         />
+        {alert && <p className="alert">User not found.</p>}
         <input type="submit" value="Login" />
       </form>
-      {alert && <p>User not found.</p>}
     </div>
   );
 };
