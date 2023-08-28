@@ -1,9 +1,6 @@
 # mern-crud
 My first MERN application
 
-# cpet17-finals
-Show motion detected only when authenticated using NextJS(next-auth)
-
 ## Languages
 - ### Frontend
   - ReactJS
